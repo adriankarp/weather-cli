@@ -4,13 +4,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "interactive": "node --env-file=.env cli.js --interactive",
     "weather": "node --env-file=.env cli.js --weather",
     "forecast": "node --env-file=.env cli.js --forecast"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "chalk": "^5.4.1",
