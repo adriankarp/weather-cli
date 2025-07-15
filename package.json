@@ -2,11 +2,19 @@
   "name": "weather-cli",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "interactive": "node --env-file=.env cli.js --interactive",
+    "weather": "node --env-file=.env cli.js --weather",
+    "forecast": "node --env-file=.env cli.js --forecast"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^14.0.0",
+    "ora": "^8.2.0"
+  }
 }
