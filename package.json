@@ -4,8 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "weather": "node --env-file=.env cli.js --weather",
-    "forecast": "node --env-file=.env cli.js --forecast"
+    "start": "node --env-file=.env cli.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +12,8 @@
   "description": "",
   "dependencies": {
     "chalk": "^5.4.1",
-    "commander": "^14.0.0",
+    "figlet": "^1.8.2",
+    "inquirer": "^12.7.0",
     "ora": "^8.2.0"
   }
 }
