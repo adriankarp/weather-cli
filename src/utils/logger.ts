@@ -10,8 +10,12 @@ const FORECAST_FILE = "forecast-log.txt";
  * @param {"weather"|"forecast"} mode decides which file to write
  * @param {string} message
  */
-export async function logResult(mode, location, message) {
+export async function logResult(
+  mode: "weather" | "forecast",
+  location: string,
+  message: string
+): Promise<void> {
   const stamp = new Date().toISOString();
-  const fileName = mode === "weather" ? WEATHER_FILE : FORECAST_FILE;
-  await appendFile(fileName, `[${stamp}] ${location}: ${message}\n`);
+  const file = mode === "weather" ? WEATHER_FILE : FORECAST_FILE;
+  await appendFile(file, `[${stamp}] ${location}: ${message}\n`);
 }

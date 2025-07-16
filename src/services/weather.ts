@@ -1,5 +1,23 @@
 // Fetch layer
 
+export interface CurrentConditions {
+  temp: number;
+  feelslike: number;
+  humidity: number;
+  windspeed: number;
+  conditions: string;
+  icon: string;
+}
+
+export interface ForecastDay {
+  datetime?: string;
+  datetimeEpoch?: number;
+  tempmax: number;
+  tempmin: number;
+  conditions: string;
+  icon: string;
+}
+
 const BASE_URL = process.env.VISUAL_CROSSING_URL;
 const API_KEY = process.env.VISUAL_CROSSING_API_KEY;
 const COMMON_QUERY = "unitGroup=metric&lang=en&contentType=json";
@@ -15,7 +33,7 @@ if (!BASE_URL || !API_KEY) {
  * @param {string} location city, address or "lat,lon"
  * @returns {Promise<object>}
  */
-export async function getCurrent(location) {
+export async function getCurrent(location: string): Promise<CurrentConditions> {
   const loc = encodeURIComponent(location.trim());
   const url =
     `${BASE_URL}/${loc}` + `?include=current&${COMMON_QUERY}&key=${API_KEY}`;
@@ -35,7 +53,7 @@ export async function getCurrent(location) {
  * @param {string} location city, address or "lat,lon"
  * @returns {Promise<object[]>}
  */
-export async function getForecast(location) {
+export async function getForecast(location: string): Promise<ForecastDay[]> {
   const loc = encodeURIComponent(location.trim());
 
   const url =

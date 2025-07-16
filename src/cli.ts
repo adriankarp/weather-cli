@@ -5,7 +5,12 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import figlet from "figlet";
 
-import { getCurrent, getForecast } from "./services/weather.js";
+import {
+  getCurrent,
+  getForecast,
+  CurrentConditions,
+  ForecastDay,
+} from "./services/weather.js";
 import { formatWeather } from "./utils/format.js";
 import { logResult } from "./utils/logger.js";
 
@@ -13,9 +18,9 @@ console.log(
   chalk.cyan(figlet.textSync("weather-cli", { horizontalLayout: "full" }))
 );
 
-const { mode } = await inquirer.prompt({
+const { wantsWeather }: { wantsWeather: boolean } = await inquirer.prompt({
   type: "list",
-  name: "mode",
+  name: "wantsWeather",
   message: "What do you need?",
   choices: [
     { name: "Current weather", value: true },
@@ -23,17 +28,17 @@ const { mode } = await inquirer.prompt({
   ],
 });
 
-const { location } = await inquirer.prompt({
+const { location }: { location: string } = await inquirer.prompt({
   type: "input",
   name: "location",
   message: 'Enter location (city, address, or "lat,lon"):',
-  validate: (s) => s.trim() !== "" || "Location cannot be empty",
+  validate: (s: string) => s.trim() !== "" || "Location cannot be empty",
 });
 
 const spinner = ora("Fetching weather data…").start();
 
 try {
-  if (mode) {
+  if (wantsWeather) {
     const raw = await getCurrent(location);
     const pretty = formatWeather(raw, "weather");
     spinner.succeed("Current weather:");
@@ -46,7 +51,8 @@ try {
     console.log(pretty);
     await logResult("forecast", location, pretty);
   }
-} catch (err) {
-  spinner.fail(chalk.red(err.message));
+} catch (err: unknown) {
+  const msg = err instanceof Error ? err.message : String(err);
+  spinner.fail(chalk.red(msg));
   process.exit(1);
 }
